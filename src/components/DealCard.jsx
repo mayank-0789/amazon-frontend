@@ -4,9 +4,16 @@ import { Star } from 'lucide-react';
 
 const DealCard = ({ deal, onAddToCart }) => {
   const { id, title, product, endsAt, claimed } = deal;
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(endsAt));
 
-  function calculateTimeLeft() {
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft(endsAt));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [endsAt]);
+
+  function calculateTimeLeft(endsAt) {
     const difference = new Date(endsAt) - new Date();
     if (difference <= 0) {
       return { hours: 0, minutes: 0, seconds: 0 };
@@ -18,21 +25,14 @@ const DealCard = ({ deal, onAddToCart }) => {
     };
   }
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [endsAt]);
-
   const renderStars = (rating) => {
     const stars = [];
     const fullStars = Math.floor(rating);
     for (let i = 0; i < 5; i++) {
       stars.push(
-        <Star 
-          key={i} 
-          className={`w-4 h-4 ${i < fullStars ? 'fill-[#de7921] text-[#de7921]' : 'text-gray-300'}`} 
+        <Star
+          key={i}
+          className={`w-4 h-4 ${i < fullStars ? 'fill-[#de7921] text-[#de7921]' : 'text-gray-300'}`}
         />
       );
     }
@@ -47,7 +47,7 @@ const DealCard = ({ deal, onAddToCart }) => {
   };
 
   return (
-    <div 
+    <div
       className="bg-white p-4 rounded-sm hover:shadow-lg transition-shadow min-w-[280px]"
       data-testid={`deal-card-${id}`}
     >
@@ -89,7 +89,7 @@ const DealCard = ({ deal, onAddToCart }) => {
 
       {/* Product Title */}
       <Link to={`/product/${product.id}`}>
-        <h3 
+        <h3
           className="text-sm text-[#0f1111] line-clamp-2 hover:text-[#c7511f] cursor-pointer mb-2"
           data-testid={`deal-title-${id}`}
         >
@@ -111,7 +111,7 @@ const DealCard = ({ deal, onAddToCart }) => {
       {claimed && (
         <div className="mb-3">
           <div className="h-4 bg-gray-200 rounded-full overflow-hidden relative">
-            <div 
+            <div
               className="h-full rounded-full"
               style={{
                 width: `${claimed}%`,
@@ -128,7 +128,7 @@ const DealCard = ({ deal, onAddToCart }) => {
       {/* Countdown Timer */}
       <div className="flex items-center gap-1 text-sm text-[#565959] mb-3">
         <span>Ends in:</span>
-        <span 
+        <span
           className="font-mono bg-[#0f1111] text-white px-1.5 py-0.5 rounded"
           data-testid={`deal-timer-${id}`}
         >

@@ -27,29 +27,29 @@ const SearchPage = () => {
   const { addToCart } = useCart();
 
   useEffect(() => {
+    const fetchSearchResults = async () => {
+      try {
+        setLoading(true);
+        const [productsRes, searchCatRes, footerRes] = await Promise.all([
+          axios.get(`${API}/products/search`, {
+            params: { q: query, category }
+          }),
+          axios.get(`${API}/search-categories`),
+          axios.get(`${API}/footer-links`)
+        ]);
+
+        setProducts(productsRes.data);
+        setSearchCategories(searchCatRes.data);
+        setFooterLinks(footerRes.data);
+      } catch (error) {
+        console.error('Error fetching search results:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchSearchResults();
   }, [query, category]);
-
-  const fetchSearchResults = async () => {
-    try {
-      setLoading(true);
-      const [productsRes, searchCatRes, footerRes] = await Promise.all([
-        axios.get(`${API}/products/search`, {
-          params: { q: query, category }
-        }),
-        axios.get(`${API}/search-categories`),
-        axios.get(`${API}/footer-links`)
-      ]);
-
-      setProducts(productsRes.data);
-      setSearchCategories(searchCatRes.data);
-      setFooterLinks(footerRes.data);
-    } catch (error) {
-      console.error('Error fetching search results:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleAddToCart = (product) => {
     addToCart(product);

@@ -24,29 +24,29 @@ const ProductPage = () => {
   const { addToCart } = useCart();
 
   useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        setLoading(true);
+        const [productRes, productsRes, searchCatRes, footerRes] = await Promise.all([
+          axios.get(`${API}/products/${id}`),
+          axios.get(`${API}/products`),
+          axios.get(`${API}/search-categories`),
+          axios.get(`${API}/footer-links`)
+        ]);
+
+        setProduct(productRes.data);
+        setProducts(productsRes.data);
+        setSearchCategories(searchCatRes.data);
+        setFooterLinks(footerRes.data);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchProductData();
   }, [id]);
-
-  const fetchProductData = async () => {
-    try {
-      setLoading(true);
-      const [productRes, productsRes, searchCatRes, footerRes] = await Promise.all([
-        axios.get(`${API}/products/${id}`),
-        axios.get(`${API}/products`),
-        axios.get(`${API}/search-categories`),
-        axios.get(`${API}/footer-links`)
-      ]);
-
-      setProduct(productRes.data);
-      setProducts(productsRes.data);
-      setSearchCategories(searchCatRes.data);
-      setFooterLinks(footerRes.data);
-    } catch (error) {
-      console.error('Error fetching product:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {

@@ -14,11 +14,7 @@ const ProductReviews = ({ productId }) => {
   const [submitting, setSubmitting] = useState(false);
   const { user, isAuthenticated } = useAuth();
 
-  useEffect(() => {
-    fetchReviews();
-  }, [productId]);
-
-  const fetchReviews = async () => {
+  const fetchReviews = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(`${API}/products/${productId}/reviews`);
@@ -28,7 +24,11 @@ const ProductReviews = ({ productId }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [productId]);
+
+  useEffect(() => {
+    fetchReviews();
+  }, [fetchReviews]);
 
   const handleSubmitReview = async (e) => {
     e.preventDefault();
@@ -72,11 +72,10 @@ const ProductReviews = ({ productId }) => {
             disabled={!interactive}
           >
             <Star
-              className={`w-5 h-5 ${
-                star <= rating
+              className={`w-5 h-5 ${star <= rating
                   ? 'fill-[#de7921] text-[#de7921]'
                   : 'text-gray-300'
-              }`}
+                }`}
             />
           </button>
         ))}
@@ -144,7 +143,7 @@ const ProductReviews = ({ productId }) => {
           <p className="text-sm text-[#565959] mb-4">
             Share your thoughts with other customers
           </p>
-          
+
           {isAuthenticated ? (
             !showReviewForm ? (
               <button
@@ -158,7 +157,7 @@ const ProductReviews = ({ productId }) => {
               <form onSubmit={handleSubmitReview} className="space-y-4">
                 <div>
                   <label className="block text-sm font-bold mb-2">Overall rating</label>
-                  {renderStars(newReview.rating, true, (rating) => 
+                  {renderStars(newReview.rating, true, (rating) =>
                     setNewReview({ ...newReview, rating })
                   )}
                 </div>
@@ -219,7 +218,7 @@ const ProductReviews = ({ productId }) => {
       {/* Reviews List */}
       <div className="border-t border-gray-200 pt-6">
         <h3 className="font-bold text-[#0f1111] mb-4">Top reviews</h3>
-        
+
         {reviews.length === 0 ? (
           <p className="text-sm text-[#565959]">No reviews yet. Be the first to review this product!</p>
         ) : (
@@ -242,10 +241,10 @@ const ProductReviews = ({ productId }) => {
 
                 {/* Date & Verified */}
                 <div className="flex items-center gap-2 text-xs text-[#565959] mb-2">
-                  <span>Reviewed on {new Date(review.created_at).toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
+                  <span>Reviewed on {new Date(review.created_at).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
                   })}</span>
                   {review.verified_purchase && (
                     <span className="flex items-center gap-1 text-[#c45500]">
