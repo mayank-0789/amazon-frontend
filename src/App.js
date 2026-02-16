@@ -5,6 +5,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
 import { WishlistProvider } from "./context/WishlistContext";
 import { CompareProvider } from "./context/CompareContext";
+import { OrderProvider } from "./context/OrderContext";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
@@ -22,6 +23,7 @@ function App() {
         <CartProvider>
           <WishlistProvider>
             <CompareProvider>
+              <OrderProvider>
               <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<HomePage />} />
@@ -37,6 +39,7 @@ function App() {
                   <Route path="/category/:category" element={<SearchPage />} />
                 </Routes>
               </BrowserRouter>
+              </OrderProvider>
             </CompareProvider>
           </WishlistProvider>
         </CartProvider>

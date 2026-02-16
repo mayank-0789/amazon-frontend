@@ -25,7 +25,6 @@ const RegisterPage = () => {
     setError('');
     setLoading(true);
 
-    // Validation
     if (!name || !email || !password || !confirmPassword) {
       setError('Please fill in all fields');
       setLoading(false);
@@ -50,9 +49,8 @@ const RegisterPage = () => {
       return;
     }
 
-    // Mock sign up
     await new Promise(resolve => setTimeout(resolve, 500));
-    
+
     const result = signUp(email, password, name);
     if (result.success) {
       navigate('/');
@@ -63,38 +61,46 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white" data-testid="register-page">
-      {/* Header */}
-      <div className="py-4 border-b border-gray-200">
-        <div className="max-w-[350px] mx-auto">
-          <Link to="/" className="flex justify-center">
-            <span className="text-3xl font-bold text-[#0f1111]">
-              amazon<span className="text-[#f08804]">.com</span>
-            </span>
+    <div className="min-h-screen bg-white font-sans text-[#0f1111]" data-testid="register-page">
+      {/* Header with Logo - matches SignInPage */}
+      <div className="mb-[14px] pt-[22px] pb-[18px]">
+        <div className="flex justify-center">
+          <Link to="/">
+            <div className="flex items-center relative">
+              <img
+                src="/amazon_logo_dark.png"
+                alt="Amazon"
+                className="h-[31px] object-contain"
+              />
+              <span className="text-[#0f1111] text-[14px] -mt-1 ml-0.5 font-normal">.in</span>
+            </div>
           </Link>
         </div>
       </div>
 
       {/* Registration Form */}
-      <div className="max-w-[350px] mx-auto mt-6 px-4">
-        <div className="border border-gray-300 rounded-lg p-5">
-          <h1 className="text-2xl font-medium text-[#0f1111] mb-4">Create account</h1>
+      <div className="max-w-[350px] mx-auto">
+        <div className="border border-[#ddd] rounded-[8px] p-[26px] pb-[20px] mb-[22px]">
+          <h1 className="text-[24px] font-normal mb-[10px] leading-[1.2]">Create account</h1>
 
           {error && (
-            <div 
-              className="flex items-center gap-2 p-3 mb-4 bg-[#fcf4f4] border border-[#c40000] rounded-lg text-sm text-[#c40000]"
+            <div
+              className="flex items-start gap-3 p-[14px] mb-[14px] border border-[#c40000] rounded-[4px] shadow-[0_0_0_1px_#c40000_inset]"
               data-testid="error-message"
             >
-              <AlertCircle className="w-5 h-5 shrink-0" />
-              <span>{error}</span>
+              <AlertCircle className="w-[18px] h-[18px] text-[#c40000] shrink-0" />
+              <div className="text-[12px]">
+                <h4 className="font-bold text-[#c40000] mb-1">There was a problem</h4>
+                <p>{error}</p>
+              </div>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label 
-                htmlFor="name" 
-                className="block text-sm font-bold text-[#0f1111] mb-1"
+          <form onSubmit={handleSubmit}>
+            <div className="mb-[14px]">
+              <label
+                htmlFor="name"
+                className="text-[13px] font-bold mb-[4px] pl-[2px] tracking-wide text-[#0f1111] block"
               >
                 Your name
               </label>
@@ -104,15 +110,15 @@ const RegisterPage = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="First and last name"
-                className="w-full px-3 py-2 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-[#e77600] focus:border-[#e77600]"
+                className="w-full h-[31px] px-[7px] py-[3px] border border-[#a6a6a6] border-t-[#949494] rounded-[3px] text-[13px] shadow-[0_1px_0_rgba(255,255,255,0.5),0_1px_0_rgba(0,0,0,0.07)_inset] focus:outline-none focus:border-[#e77600] focus:shadow-[0_0_3px_2px_rgba(228,121,17,0.5)] transition-all"
                 data-testid="name-input"
               />
             </div>
 
-            <div>
-              <label 
-                htmlFor="email" 
-                className="block text-sm font-bold text-[#0f1111] mb-1"
+            <div className="mb-[14px]">
+              <label
+                htmlFor="email"
+                className="text-[13px] font-bold mb-[4px] pl-[2px] tracking-wide text-[#0f1111] block"
               >
                 Email
               </label>
@@ -121,15 +127,15 @@ const RegisterPage = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-[#e77600] focus:border-[#e77600]"
+                className="w-full h-[31px] px-[7px] py-[3px] border border-[#a6a6a6] border-t-[#949494] rounded-[3px] text-[13px] shadow-[0_1px_0_rgba(255,255,255,0.5),0_1px_0_rgba(0,0,0,0.07)_inset] focus:outline-none focus:border-[#e77600] focus:shadow-[0_0_3px_2px_rgba(228,121,17,0.5)] transition-all"
                 data-testid="email-input"
               />
             </div>
 
-            <div>
-              <label 
-                htmlFor="password" 
-                className="block text-sm font-bold text-[#0f1111] mb-1"
+            <div className="mb-[14px]">
+              <label
+                htmlFor="password"
+                className="text-[13px] font-bold mb-[4px] pl-[2px] tracking-wide text-[#0f1111] block"
               >
                 Password
               </label>
@@ -140,30 +146,29 @@ const RegisterPage = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="At least 6 characters"
-                  className="w-full px-3 py-2 pr-10 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-[#e77600] focus:border-[#e77600]"
+                  className="w-full h-[31px] px-[7px] py-[3px] pr-10 border border-[#a6a6a6] border-t-[#949494] rounded-[3px] text-[13px] shadow-[0_1px_0_rgba(255,255,255,0.5),0_1px_0_rgba(0,0,0,0.07)_inset] focus:outline-none focus:border-[#e77600] focus:shadow-[0_0_3px_2px_rgba(228,121,17,0.5)] transition-all"
                   data-testid="password-input"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
-              
-              {/* Password Requirements */}
+
               {password && (
                 <div className="mt-2 space-y-1">
                   {passwordRequirements.map((req, i) => (
-                    <div 
+                    <div
                       key={i}
-                      className={`flex items-center gap-2 text-xs ${req.valid ? 'text-green-600' : 'text-gray-500'}`}
+                      className={`flex items-center gap-2 text-[11px] ${req.valid ? 'text-[#007600]' : 'text-[#565959]'}`}
                     >
                       {req.valid ? (
                         <Check className="w-3 h-3" />
                       ) : (
-                        <div className="w-3 h-3 rounded-full border border-gray-400" />
+                        <div className="w-3 h-3 rounded-full border border-[#a6a6a6]" />
                       )}
                       {req.label}
                     </div>
@@ -172,10 +177,10 @@ const RegisterPage = () => {
               )}
             </div>
 
-            <div>
-              <label 
-                htmlFor="confirmPassword" 
-                className="block text-sm font-bold text-[#0f1111] mb-1"
+            <div className="mb-[14px]">
+              <label
+                htmlFor="confirmPassword"
+                className="text-[13px] font-bold mb-[4px] pl-[2px] tracking-wide text-[#0f1111] block"
               >
                 Re-enter password
               </label>
@@ -184,40 +189,36 @@ const RegisterPage = () => {
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-[#e77600] focus:border-[#e77600]"
+                className="w-full h-[31px] px-[7px] py-[3px] border border-[#a6a6a6] border-t-[#949494] rounded-[3px] text-[13px] shadow-[0_1px_0_rgba(255,255,255,0.5),0_1px_0_rgba(0,0,0,0.07)_inset] focus:outline-none focus:border-[#e77600] focus:shadow-[0_0_3px_2px_rgba(228,121,17,0.5)] transition-all"
                 data-testid="confirm-password-input"
               />
               {confirmPassword && password !== confirmPassword && (
-                <p className="mt-1 text-xs text-[#c40000]">Passwords must match</p>
+                <p className="mt-1 text-[11px] text-[#c40000]">Passwords must match</p>
               )}
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 px-4 bg-[#ffd814] hover:bg-[#f7ca00] rounded-lg text-sm font-medium text-[#0f1111] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full h-[29px] bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-[8px] text-[13px] text-[#0f1111] shadow-[0_2px_5px_0_rgba(213,217,217,0.5)] focus:ring-[3px] focus:ring-[#008296] focus:ring-opacity-50 cursor-pointer mb-[14px] font-normal disabled:opacity-50 disabled:cursor-not-allowed"
               data-testid="register-button"
             >
               {loading ? 'Creating account...' : 'Create your Amazon account'}
             </button>
           </form>
 
-          <p className="mt-4 text-xs text-[#0f1111]">
+          <div className="text-[12px] leading-[1.5] mb-[14px]">
             By creating an account, you agree to Amazon's{' '}
-            <Link to="/conditions" className="text-[#007185] hover:text-[#c7511f] hover:underline">
-              Conditions of Use
-            </Link>{' '}
+            <span className="text-[#007185]">Conditions of Use</span>{' '}
             and{' '}
-            <Link to="/privacy" className="text-[#007185] hover:text-[#c7511f] hover:underline">
-              Privacy Notice
-            </Link>.
-          </p>
+            <span className="text-[#007185]">Privacy Notice</span>.
+          </div>
 
-          <div className="mt-6 pt-4 border-t border-gray-200">
-            <p className="text-sm text-[#0f1111]">
+          <div className="border-t border-[#e7e7e7] pt-[14px]">
+            <p className="text-[13px] text-[#0f1111]">
               Already have an account?{' '}
-              <Link 
-                to="/signin" 
+              <Link
+                to="/signin"
                 className="text-[#007185] hover:text-[#c7511f] hover:underline"
               >
                 Sign in
@@ -227,23 +228,17 @@ const RegisterPage = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="mt-8 pt-4 border-t border-gray-200 bg-gradient-to-b from-transparent to-gray-100">
-        <div className="max-w-[600px] mx-auto text-center py-4">
-          <div className="flex justify-center gap-4 text-xs text-[#007185] mb-2">
-            <Link to="/conditions" className="hover:text-[#c7511f] hover:underline">
-              Conditions of Use
-            </Link>
-            <Link to="/privacy" className="hover:text-[#c7511f] hover:underline">
-              Privacy Notice
-            </Link>
-            <Link to="/help" className="hover:text-[#c7511f] hover:underline">
-              Help
-            </Link>
+      {/* Footer - matches SignInPage */}
+      <div className="mt-[26px] border-t border-[#e7e7e7] bg-gradient-to-b from-white to-[#fcfcfc] pb-[30px]">
+        <div className="pt-[20px] max-w-[700px] mx-auto text-center px-4">
+          <div className="flex flex-wrap justify-center gap-x-[26px] gap-y-2 text-[11px] text-[#007185] mb-[10px]">
+            <span className="text-[#007185]">Conditions of Use</span>
+            <span className="text-[#007185]">Privacy Notice</span>
+            <span className="text-[#007185]">Help</span>
           </div>
-          <p className="text-xs text-[#555]">
+          <div className="text-[11px] text-[#555]">
             © 1996-{new Date().getFullYear()}, Amazon.com, Inc. or its affiliates
-          </p>
+          </div>
         </div>
       </div>
     </div>

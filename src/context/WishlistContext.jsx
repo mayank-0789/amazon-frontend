@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
+import { getOrCreateSessionId } from '../lib/utils';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -20,15 +21,7 @@ export const WishlistProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
-  const getSessionId = useCallback(() => {
-    if (user?.id) return user.id;
-    let sessionId = localStorage.getItem('amazon_session_id');
-    if (!sessionId) {
-      sessionId = `guest_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      localStorage.setItem('amazon_session_id', sessionId);
-    }
-    return sessionId;
-  }, [user]);
+  const getSessionId = useCallback(() => getOrCreateSessionId(user?.id), [user]);
 
   const loadWishlist = useCallback(async () => {
     const sessionId = getSessionId();

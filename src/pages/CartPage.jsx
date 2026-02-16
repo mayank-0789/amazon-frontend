@@ -51,7 +51,7 @@ const CartPage = () => {
       <Header searchCategories={searchCategories} />
 
       <main className="max-w-[1500px] mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
           {/* Cart Items Column */}
           <div className="bg-white p-6 rounded-sm">
             <div className="flex items-end justify-between border-b border-gray-200 pb-2 mb-4">

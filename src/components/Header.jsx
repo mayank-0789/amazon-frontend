@@ -55,7 +55,7 @@ const Header = ({ searchCategories = [] }) => {
   return (
     <header className="bg-[#131921] sticky top-0 z-50 w-full" data-testid="header">
       {/* Main Header */}
-      <div className="flex items-center px-2 py-2 gap-2 w-full">
+      <div className="flex items-center px-2 py-[6px] gap-2 w-full h-[60px]">
         {/* Logo */}
         <Link
           to="/"
@@ -66,7 +66,7 @@ const Header = ({ searchCategories = [] }) => {
             <img
               src="/amazon_logo.png"
               alt="Amazon"
-              className="h-[28px] object-contain"
+              className="h-[38px] object-contain"
             />
             <span className="text-white text-xs -mt-2 ml-0.5">.in</span>
           </div>
@@ -87,7 +87,7 @@ const Header = ({ searchCategories = [] }) => {
         {/* Search Bar */}
         <form
           onSubmit={handleSearch}
-          className="flex-1 flex items-center h-10 rounded-md overflow-hidden"
+          className="flex-1 flex items-center h-10 rounded-[4px] overflow-hidden"
           data-testid="search-form"
         >
           {/* Category Dropdown */}
@@ -95,7 +95,7 @@ const Header = ({ searchCategories = [] }) => {
             <button
               type="button"
               onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-              className="h-10 px-3 bg-[#e6e6e6] hover:bg-[#d4d4d4] text-sm text-gray-700 flex items-center gap-1 rounded-l-md border-r border-gray-300"
+              className="h-10 px-3 bg-[#f3f3f3] hover:bg-[#dadada] text-[13px] text-[#555] flex items-center gap-1 rounded-l-[4px] border-r border-[#cdcdcd]"
               data-testid="category-dropdown-button"
             >
               <span className="hidden sm:inline truncate max-w-[100px]">{selectedCategory}</span>
@@ -136,7 +136,7 @@ const Header = ({ searchCategories = [] }) => {
           {/* Search Button */}
           <button
             type="submit"
-            className="h-10 w-12 bg-[#febd69] hover:bg-[#f3a847] flex items-center justify-center rounded-r-md transition-colors"
+            className="h-10 w-[45px] bg-[#febd69] hover:bg-[#f3a847] flex items-center justify-center rounded-r-[4px] transition-colors"
             data-testid="search-button"
           >
             <Search className="w-5 h-5 text-[#131921]" />
@@ -284,7 +284,7 @@ const Header = ({ searchCategories = [] }) => {
 
       {/* Sub Navigation */}
       <nav
-        className="bg-[#232f3e] flex items-center px-2 py-1 text-white text-sm gap-1 overflow-x-auto w-full"
+        className="bg-[#232f3e] flex items-center px-2 text-white text-[13px] gap-0.5 overflow-x-auto w-full h-[39px]"
         data-testid="sub-nav"
       >
         <button

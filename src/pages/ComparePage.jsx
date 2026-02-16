@@ -65,8 +65,8 @@ const ComparePage = () => {
 
   // Comparison attributes
   const comparisonAttributes = [
-    { key: 'price', label: 'Price', format: (v) => `$${v.toFixed(2)}` },
-    { key: 'originalPrice', label: 'List Price', format: (v) => `$${v.toFixed(2)}` },
+    { key: 'price', label: 'Price', format: (v) => `₹${v.toLocaleString('en-IN')}` },
+    { key: 'originalPrice', label: 'List Price', format: (v) => `₹${v.toLocaleString('en-IN')}` },
     { key: 'rating', label: 'Rating', format: (v) => `${v} out of 5` },
     { key: 'reviewCount', label: 'Reviews', format: (v) => v.toLocaleString() },
     { key: 'isPrime', label: 'Prime', format: (v) => v ? 'Yes' : 'No' },
@@ -150,7 +150,7 @@ const ComparePage = () => {
                     Product
                   </th>
                   {displayCompare.map((product) => (
-                    <th key={product.id} className="p-4 border border-gray-200 min-w-[200px] relative">
+                    <th key={product.id} className="p-4 border border-gray-200 min-w-[240px] relative">
                       <button
                         onClick={() => removeFromCompare(product.id)}
                         className="absolute top-2 right-2 p-1 hover:bg-gray-100 rounded-full"
@@ -162,7 +162,7 @@ const ComparePage = () => {
                         <img
                           src={product.image}
                           alt={product.title}
-                          className="w-32 h-32 object-contain mx-auto mb-3"
+                          className="w-40 h-40 object-contain mx-auto mb-3"
                         />
                         <h3 className="text-sm text-[#007185] hover:text-[#c7511f] hover:underline line-clamp-3 text-left">
                           {product.title}
@@ -205,7 +205,7 @@ const ComparePage = () => {
                       >
                         <div className="flex items-center gap-2">
                           <span className="text-lg font-medium text-[#0f1111]">
-                            ${product.price.toFixed(2)}
+                            ₹{product.price.toLocaleString('en-IN')}
                           </span>
                           {isBestPrice && (
                             <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">
@@ -215,7 +215,7 @@ const ComparePage = () => {
                         </div>
                         {product.originalPrice > product.price && (
                           <span className="text-sm text-[#565959] line-through">
-                            ${product.originalPrice.toFixed(2)}
+                            ₹{product.originalPrice.toLocaleString('en-IN')}
                           </span>
                         )}
                       </td>
@@ -235,7 +235,7 @@ const ComparePage = () => {
                       <td key={product.id} className="p-4 border border-gray-200">
                         {savings > 0 ? (
                           <span className="text-[#cc0c39] font-medium">
-                            ${savings.toFixed(2)} ({savingsPercent}%)
+                            ₹{savings.toLocaleString('en-IN')} ({savingsPercent}%)
                           </span>
                         ) : (
                           <span className="text-[#565959]">—</span>
@@ -330,7 +330,7 @@ const ComparePage = () => {
                       className="w-full aspect-square object-contain mb-2"
                     />
                     <h3 className="text-xs text-[#0f1111] line-clamp-2">{product.title}</h3>
-                    <p className="text-sm font-medium mt-1">${product.price.toFixed(2)}</p>
+                    <p className="text-sm font-medium mt-1">₹{product.price.toLocaleString('en-IN')}</p>
                   </Link>
                 ))}
             </div>

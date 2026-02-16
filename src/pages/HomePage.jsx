@@ -92,7 +92,7 @@ const HomePage = () => {
       {/* Category Cards Grid - Pulled up with negative margin to overlap Hero */}
       <div className="relative z-10 px-4 -mt-20 sm:-mt-32 md:-mt-48 lg:-mt-72 mb-8">
         <div className="max-w-[1500px] mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {gridCards.slice(0, 4).map((card, index) => (
               <HomeGridCard key={card.id || index} {...card} linkText={card.link_text} linkUrl={card.link_url} />
             ))}
@@ -102,9 +102,9 @@ const HomePage = () => {
 
       {/* Main Content */}
       <main className="px-4 pb-8">
-        <div className="max-w-[1500px] mx-auto space-y-5">
+        <div className="max-w-[1500px] mx-auto space-y-4">
           {/* Second Row of Categories */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {gridCards.slice(4, 8).map((card, index) => (
               <HomeGridCard key={card.id || index} {...card} linkText={card.link_text} linkUrl={card.link_url} />
             ))}

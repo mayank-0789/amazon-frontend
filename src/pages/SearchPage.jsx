@@ -125,7 +125,7 @@ const SearchPage = () => {
       <main className="max-w-[1500px] mx-auto">
         <div className="flex">
           {/* Left Sidebar - Filters */}
-          <aside className="hidden md:block w-64 p-4 border-r border-gray-200">
+          <aside className="hidden md:block w-[280px] shrink-0 p-4 border-r border-gray-200 sticky top-[60px] self-start max-h-[calc(100vh-60px)] overflow-y-auto">
             <h2 className="font-bold text-lg mb-4">Filters</h2>
 
             {/* Category */}
@@ -351,7 +351,7 @@ const SearchPage = () => {
             ) : (
               <div
                 className={viewMode === 'grid'
-                  ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'
+                  ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3'
                   : 'space-y-4'
                 }
                 data-testid="search-results"

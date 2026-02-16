@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,9 +7,7 @@
 body {
     margin: 0;
     font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-        sans-serif;
+        "Inter", "Amazon Ember", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -19,6 +19,32 @@ code {
 
 @layer base {
     :root {
+        /* Amazon Design Tokens */
+        --amz-dark-blue: #131921;
+        --amz-nav-blue: #232f3e;
+        --amz-orange: #febd69;
+        --amz-orange-hover: #f3a847;
+        --amz-yellow: #ffd814;
+        --amz-yellow-hover: #f7ca00;
+        --amz-yellow-border: #fcd200;
+        --amz-buy-now: #ffa41c;
+        --amz-buy-now-hover: #fa8900;
+        --amz-link: #007185;
+        --amz-link-hover: #c7511f;
+        --amz-text: #0f1111;
+        --amz-text-secondary: #565959;
+        --amz-border: #d5d9d9;
+        --amz-border-light: #e7e7e7;
+        --amz-bg-gray: #e3e6e6;
+        --amz-bg-light: #f0f2f2;
+        --amz-category-bg: #f3f3f3;
+        --amz-star: #de7921;
+        --amz-deal-red: #cc0c39;
+        --amz-green: #007600;
+        --amz-error: #c40000;
+        --amz-focus: #e77600;
+        --amz-prime-blue: #00a8e1;
+
         --background: 0 0% 100%;
         --foreground: 0 0% 3.9%;
         --card: 0 0% 100%;

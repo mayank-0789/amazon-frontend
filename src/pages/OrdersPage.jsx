@@ -161,7 +161,7 @@ function OrdersPage() {
                           <img
                             src={item.product_snapshot.image}
                             alt={item.product_snapshot.title}
-                            className="w-[90px] h-[90px] object-contain cursor-pointer"
+                            className="w-[110px] h-[110px] object-contain cursor-pointer"
                           />
                         </Link>
 

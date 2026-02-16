@@ -101,7 +101,7 @@ const Footer = () => {
 
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img src="/amazon_logo.png" alt="Amazon" className="h-[24px] object-contain" />
+            <img src="/amazon_logo.png" alt="Amazon" className="h-[30px] object-contain" />
             <span className="text-white text-xs -mt-2 ml-0.5">.in</span>
           </Link>
 

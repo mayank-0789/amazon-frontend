@@ -6,6 +6,7 @@ const HeroCarousel = ({ slides }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const intervalRef = useRef(null);
+  const pauseTimeoutRef = useRef(null);
 
   useEffect(() => {
     if (isAutoPlaying && slides.length > 1) {
@@ -14,28 +15,35 @@ const HeroCarousel = ({ slides }) => {
       }, 5000);
     }
     return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [isAutoPlaying, slides.length]);
 
+  useEffect(() => {
+    return () => {
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    };
+  }, []);
+
+  const pauseAndResume = () => {
+    setIsAutoPlaying(false);
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    pauseTimeoutRef.current = setTimeout(() => setIsAutoPlaying(true), 10000);
+  };
+
   const goToSlide = (index) => {
     setCurrentSlide(index);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 10000);
+    pauseAndResume();
   };
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 10000);
+    pauseAndResume();
   };
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 10000);
+    pauseAndResume();
   };
 
   if (!slides || slides.length === 0) return null;

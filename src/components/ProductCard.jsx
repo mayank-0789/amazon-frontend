@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Star, StarHalf, Heart, BarChart3 } from 'lucide-react';
+import { Star, StarHalf } from 'lucide-react';
 import { useWishlist } from '../context/WishlistContext';
 import { useCompare } from '../context/CompareContext';
+import { getStarRating, formatCompactNumber } from '../lib/utils';
 
 const ProductCard = ({ product, showAddToCart = true, onAddToCart }) => {
   const {
@@ -19,39 +20,11 @@ const ProductCard = ({ product, showAddToCart = true, onAddToCart }) => {
   const { isInWishlist, toggleWishlist } = useWishlist();
   const { isInCompare, toggleCompare, compareCount, maxItems } = useCompare();
 
-  const renderStars = (rating) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 >= 0.5;
-
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(
-        <Star key={`full-${i}`} className="w-4 h-4 fill-[#de7921] text-[#de7921]" />
-      );
-    }
-
-    if (hasHalfStar) {
-      stars.push(
-        <StarHalf key="half" className="w-4 h-4 fill-[#de7921] text-[#de7921]" />
-      );
-    }
-
-    const emptyStars = 5 - Math.ceil(rating);
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(
-        <Star key={`empty-${i}`} className="w-4 h-4 text-gray-300" />
-      );
-    }
-
-    return stars;
-  };
-
-  const formatNumber = (num) => {
-    if (num >= 1000) {
-      return (num / 1000).toFixed(0) + 'K+';
-    }
-    return num.toString();
-  };
+  const renderStars = (r) => getStarRating(r).map(s =>
+    s.type === 'full' ? <Star key={s.key} className="w-4 h-4 fill-[#de7921] text-[#de7921]" /> :
+    s.type === 'half' ? <StarHalf key={s.key} className="w-4 h-4 fill-[#de7921] text-[#de7921]" /> :
+    <Star key={s.key} className="w-4 h-4 text-gray-300" />
+  );
 
   const discount = originalPrice > price
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
@@ -115,7 +88,7 @@ const ProductCard = ({ product, showAddToCart = true, onAddToCart }) => {
             to={`/product/${id}#reviews`}
             className="text-sm text-[#007185] hover:text-[#c7511f] hover:underline"
           >
-            {formatNumber(reviewCount)}
+            {formatCompactNumber(reviewCount)}
           </Link>
         </div>
 

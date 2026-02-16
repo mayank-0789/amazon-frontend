@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Star, StarHalf, Check, ChevronRight, MapPin, Truck, Shield, RotateCcw } from 'lucide-react';
+import { Star, StarHalf, ChevronRight, MapPin } from 'lucide-react';
 import Header from '../components/Header';
 import ProductCarousel from '../components/ProductCarousel';
 import ProductReviews from '../components/ProductReviews';
 import Footer from '../components/Footer';
 import { useCart } from '../context/CartContext';
+import { getStarRating, formatNumber } from '../lib/utils';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -56,36 +57,11 @@ const ProductPage = () => {
     setTimeout(() => setAddedToCart(false), 3000);
   };
 
-  const renderStars = (rating) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 >= 0.5;
-
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(
-        <Star key={`full-${i}`} className="w-5 h-5 fill-[#de7921] text-[#de7921]" />
-      );
-    }
-
-    if (hasHalfStar) {
-      stars.push(
-        <StarHalf key="half" className="w-5 h-5 fill-[#de7921] text-[#de7921]" />
-      );
-    }
-
-    const emptyStars = 5 - Math.ceil(rating);
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(
-        <Star key={`empty-${i}`} className="w-5 h-5 text-gray-300" />
-      );
-    }
-
-    return stars;
-  };
-
-  const formatNumber = (num) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
+  const renderStars = (r) => getStarRating(r).map(s =>
+    s.type === 'full' ? <Star key={s.key} className="w-5 h-5 fill-[#de7921] text-[#de7921]" /> :
+    s.type === 'half' ? <StarHalf key={s.key} className="w-5 h-5 fill-[#de7921] text-[#de7921]" /> :
+    <Star key={s.key} className="w-5 h-5 text-gray-300" />
+  );
 
   if (loading) {
     return (
@@ -152,7 +128,7 @@ const ProductPage = () => {
                 {[product.image, product.image, product.image, product.image].map((img, i) => (
                   <button
                     key={i}
-                    className={`w-[40px] h-[52px] border rounded-[2px] overflow-hidden hover:shadow-[0_0_3px_2px_rgba(228,121,17,0.5)] ${selectedImage === i ? 'shadow-[0_0_3px_2px_rgba(228,121,17,0.5)] border-[#e77600]' : 'border-[#a2a6ac]'}`}
+                    className={`w-[54px] h-[54px] border rounded-[2px] overflow-hidden hover:shadow-[0_0_3px_2px_rgba(228,121,17,0.5)] ${selectedImage === i ? 'shadow-[0_0_3px_2px_rgba(228,121,17,0.5)] border-[#e77600]' : 'border-[#a2a6ac]'}`}
                     onMouseEnter={() => setSelectedImage(i)}
                   >
                     <img src={img} className="w-full h-full object-contain p-[2px]" alt="" />
@@ -160,7 +136,7 @@ const ProductPage = () => {
                 ))}
               </div>
               <div className="flex-1">
-                <div className="w-full relative pt-[120%]"> {/* Adjusted aspect ratio */}
+                <div className="w-full relative pt-[100%]"> {/* 1:1 aspect ratio */}
                   <img src={[product.image, product.image, product.image, product.image][selectedImage]} alt={product.title} className="absolute top-0 left-0 w-full h-full object-contain" />
                   <button className="absolute top-3 right-3 p-2 hover:bg-gray-100 rounded-full">
                     <img src="https://m.media-amazon.com/images/G/31/marketing/fba/fba-badge_18px-2x._CB485942108_.png" className="w-[18px] opacity-0" alt="" />
@@ -288,7 +264,7 @@ const ProductPage = () => {
           </div>
 
           {/* Right: Buy Box (Col 3 - ~25%) */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 lg:sticky lg:top-[60px] lg:self-start">
             <div className="border border-[#d5d9d9] rounded-[8px] p-[18px] relative">
 
               {/* Exchange Box */}
@@ -392,6 +368,17 @@ const ProductPage = () => {
       </div>
 
 
+
+      {/* Related Products */}
+      {products.filter(p => p.category === product.category && p.id !== product.id).length > 0 && (
+        <div className="max-w-[1500px] mx-auto px-4 pb-8">
+          <ProductCarousel
+            title={`Products related to this item`}
+            products={products.filter(p => p.category === product.category && p.id !== product.id)}
+            onAddToCart={(p) => addToCart(p)}
+          />
+        </div>
+      )}
 
       <Footer footerLinks={footerLinks} />
     </div>
